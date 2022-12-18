@@ -1,0 +1,103 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+:root {
+    --primary-clr: #1dbd51;
+    --secondary-clr: #030b0d;
+    --grey-clr: #656565;
+}
+body {
+    display: grid;
+    place-items: center;
+    background-color: var(--primary-clr);
+    padding-top: 6rem;
+    padding-bottom: 3rem;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: clamp(300px, 95vw, 500px);
+    background-color: var(--secondary-clr);
+    box-shadow: .05rem .1rem .5rem rgba(0, 10, 3, 0.555);
+    padding: 2rem 1rem;
+    color: var(--primary-clr);
+    text-align: center;
+}
+
+form {
+    align-items: center;
+    display: flex;
+    justify-content: space-evenly;
+}
+form input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid var(--primary-clr);
+    color: var(--primary-clr);
+    font-size: 1rem;
+    outline: none;
+    padding: 0.3rem;
+}
+button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: 2px solid var(--primary-clr);
+    padding: 0.3rem 1rem;
+    color: var(--primary-clr);
+    font-size: 1rem;
+
+    transition: 150ms ease-in-out background-color,
+                150ms ease-in-out color;
+}
+button:hover {
+    background-color: var(--primary-clr);
+    color: var(--secondary-clr);
+}
+button:active {
+    transform: scale(.9);
+}
+
+.tabs {
+    margin: 1.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 1rem;
+}
+.todo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--primary-clr);
+}
+.todo-text {
+    text-align: left;
+}
+.todo-item .settings-icons {
+    display: flex;
+    align-items: center;
+    column-gap: .8rem;
+}
+.todo-item .settings-icons i {
+    cursor: pointer;
+}
+
+.todo-item.done .todo-text {
+    color: var(--grey-clr);
+    text-decoration: line-through;
+}
+.todo-item.done .todo-date {
+    color: var(--grey-clr);
+}
+button.active-tab {
+    background-color: var(--primary-clr);
+    color: var(--secondary-clr);
+}
