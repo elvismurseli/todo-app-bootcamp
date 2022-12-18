@@ -35,6 +35,7 @@ form {
     justify-content: space-evenly;
 }
 form input {
+    width: 70%;
     background-color: transparent;
     border: none;
     border-bottom: 2px solid var(--primary-clr);
@@ -42,6 +43,9 @@ form input {
     font-size: 1rem;
     outline: none;
     padding: 0.3rem;
+}
+@media (max-width: 490px) {
+    form input { width: 60%; }
 }
 button {
     background-color: transparent;
