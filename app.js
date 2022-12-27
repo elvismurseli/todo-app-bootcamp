@@ -40,7 +40,7 @@ form.addEventListener('submit', e => {
 
     if (editMode) return
 
-    if (input.value == '') return
+    if (input.value.trim() == '') return
 
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, '0');
@@ -84,8 +84,10 @@ const handleEdit = (e) => {
     input.nextElementSibling.innerText = 'Edit Todo'
     input.focus()
 
+    document.querySelector('.cancel-edit-mode').style.display = 'block'
+
     form.addEventListener('submit', () => {
-        if (input.value == '') return
+        if (input.value.trim() == '') return
 
         e.target.parentElement.previousElementSibling.innerText = input.value
         input.nextElementSibling.innerText = 'Add Todo'
@@ -177,4 +179,12 @@ notDoneBtn.addEventListener('click', () => {
     allBtn.classList.remove('active-tab')
     doneBtn.classList.remove('active-tab')
     notDoneBtn.classList.add('active-tab')
+})
+
+document.querySelector('.cancel-edit-mode').addEventListener('click', () => {
+    editMode = false
+    input.value = ''
+    input.nextElementSibling.innerText = 'Add Todo'
+
+    document.querySelector('.cancel-edit-mode').style.display = 'none'
 })

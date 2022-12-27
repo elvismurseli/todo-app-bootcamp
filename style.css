@@ -6,7 +6,7 @@
     font-family: 'Poppins', sans-serif;
 }
 :root {
-    --primary-clr: #1ea6af;
+    --primary-clr: #fd8f00;
     --secondary-clr: #030b0d;
     --grey-clr: #656565;
 }
@@ -104,4 +104,9 @@ button:active {
 button.active-tab {
     background-color: var(--primary-clr);
     color: var(--secondary-clr);
+}
+
+.cancel-edit-mode {
+    margin-bottom: 2rem;
+    display: none;
 }
