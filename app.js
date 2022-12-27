@@ -82,8 +82,11 @@ const handleEdit = (e) => {
     editMode = true
     input.value = e.target.parentElement.previousElementSibling.innerText
     input.nextElementSibling.innerText = 'Edit Todo'
+    input.focus()
 
     form.addEventListener('submit', () => {
+        if (input.value == '') return
+
         e.target.parentElement.previousElementSibling.innerText = input.value
         input.nextElementSibling.innerText = 'Add Todo'
 
@@ -96,7 +99,6 @@ const handleEdit = (e) => {
         localStorage.setItem('todos', JSON.stringify(todos))
 
         editMode = false
-        input.value = ''
     })
 }
 
