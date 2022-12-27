@@ -38,44 +38,47 @@ window.addEventListener('load', () => {
 form.addEventListener('submit', e => {
     e.preventDefault()
 
-    if (editMode) return
-
-    if (input.value.trim() == '') return
-
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0');
-    let yyyy = today.getFullYear();
-
-    today = mm + '/' + dd + '/' + yyyy;
-
-    const childObj = {
-        value: input.value,
-        date: today,
-        completed: false,
-        id: Date.now()
+    if (editMode) {return}
+    else {
+        if (input.value.trim() == '') {
+            document.querySelector('.alert').style.display = 'block'
+    
+            setTimeout(() => document.querySelector('.alert').style.display = 'none', 5000)
+        } else {
+            let today = new Date();
+            let dd = String(today.getDate()).padStart(2, '0');
+            let mm = String(today.getMonth() + 1).padStart(2, '0');
+            let yyyy = today.getFullYear();
+        
+            today = mm + '/' + dd + '/' + yyyy;
+        
+            const childObj = {
+                value: input.value,
+                date: today,
+                completed: false,
+                id: Date.now()
+            }
+        
+            const todo_item_el = document.createElement('div')
+            todo_item_el.classList.add('todo-item')
+            todo_item_el.setAttribute('data-id', childObj.id)
+            todo_item_el.innerHTML = `
+                <p class="todo-text">${childObj.value}</p>
+                <div class="settings-icons">
+                    <p class="todo-date">${childObj.date}</p>
+                    <i onclick="handleEdit(event)" class="fa-solid fa-pen-to-square"></i>
+                    <i onclick="handleDone(event)" class="fa-solid fa-circle-check"></i>
+                    <i onclick="handleDelete(event)" class="fa-solid fa-circle-xmark"></i>
+                </div>
+            `
+        
+            todos.push(childObj)
+            localStorage.setItem('todos', JSON.stringify(todos))
+            todos_container.appendChild(todo_item_el)
+            input.value = ''
+            document.querySelector('.alert').style.display = 'none'
+        }
     }
-
-    const todo_item_el = document.createElement('div')
-    todo_item_el.classList.add('todo-item')
-    todo_item_el.setAttribute('data-id', childObj.id)
-    todo_item_el.innerHTML = `
-        <p class="todo-text">${childObj.value}</p>
-        <div class="settings-icons">
-            <p class="todo-date">${childObj.date}</p>
-            <i onclick="handleEdit(event)" class="fa-solid fa-pen-to-square"></i>
-            <i onclick="handleDone(event)" class="fa-solid fa-circle-check"></i>
-            <i onclick="handleDelete(event)" class="fa-solid fa-circle-xmark"></i>
-        </div>
-    `
-
-    todos.push(childObj)
-
-    localStorage.setItem('todos', JSON.stringify(todos))
-
-    todos_container.appendChild(todo_item_el)
-
-    input.value = ''
 })
 
 const handleEdit = (e) => {
@@ -87,20 +90,27 @@ const handleEdit = (e) => {
     document.querySelector('.cancel-edit-mode').style.display = 'block'
 
     form.addEventListener('submit', () => {
-        if (input.value.trim() == '') return
+        if (input.value.trim() == '') {
+            document.querySelector('.alert').style.display = 'block'
 
-        e.target.parentElement.previousElementSibling.innerText = input.value
-        input.nextElementSibling.innerText = 'Add Todo'
+            setTimeout(() => document.querySelector('.alert').style.display = 'none', 5000)
+        } else {
+            e.target.parentElement.previousElementSibling.innerText = input.value
+            input.nextElementSibling.innerText = 'Add Todo'
+    
+            todos.forEach(todo => {
+                if (todo.id == e.target.parentElement.previousElementSibling.parentElement.getAttribute('data-id')) {
+                    todo.value = input.value
+                }
+            })
+    
+            localStorage.setItem('todos', JSON.stringify(todos))
+    
+            editMode = false
+            document.querySelector('.cancel-edit-mode').style.display = 'none'
+            input.value = ''
+        }
 
-        todos.forEach(todo => {
-            if (todo.id == e.target.parentElement.previousElementSibling.parentElement.getAttribute('data-id')) {
-                todo.value = input.value
-            }
-        })
-
-        localStorage.setItem('todos', JSON.stringify(todos))
-
-        editMode = false
     })
 }
 
@@ -160,6 +170,11 @@ doneBtn.addEventListener('click', () => {
     allBtn.classList.remove('active-tab')
     doneBtn.classList.add('active-tab')
     notDoneBtn.classList.remove('active-tab')
+
+    editMode = false
+    document.querySelector('.cancel-edit-mode').style.display = 'none'
+    input.value = ''
+    input.nextElementSibling.innerText = 'Add Todo'
 })
 
 notDoneBtn.addEventListener('click', () => {
@@ -179,6 +194,11 @@ notDoneBtn.addEventListener('click', () => {
     allBtn.classList.remove('active-tab')
     doneBtn.classList.remove('active-tab')
     notDoneBtn.classList.add('active-tab')
+
+    editMode = false
+    document.querySelector('.cancel-edit-mode').style.display = 'none'
+    input.value = ''
+    input.nextElementSibling.innerText = 'Add Todo'
 })
 
 document.querySelector('.cancel-edit-mode').addEventListener('click', () => {

@@ -110,3 +110,12 @@ button.active-tab {
     margin-bottom: 2rem;
     display: none;
 }
+.alert {
+    margin-top: 1.2rem;
+    background-color: var(--primary-clr);
+    color: var(--secondary-clr);
+    padding: .5rem 0;
+    font-weight: 500;
+    
+    display: none;
+}
